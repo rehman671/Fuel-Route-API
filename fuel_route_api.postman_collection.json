@@ -1,0 +1,90 @@
+{
+  "info": {
+    "name": "Fuel Route API",
+    "_postman_id": "b3a7c0f2-1d4e-4a8b-9c6d-fuelroute0001",
+    "description": "Plan a fuel-optimal driving route between two US locations. Set the `baseUrl` collection variable if your server is not on http://localhost:8000.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Plan route (Chicago -> Houston)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Chicago, IL\",\n  \"destination\": \"Houston, TX\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/route/",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "route", ""]
+        },
+        "description": "Returns the route, optimal fuel stops, total fuel cost, and map data."
+      }
+    },
+    {
+      "name": "Plan route (short - no stops, Dallas -> Austin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Dallas, TX\",\n  \"destination\": \"Austin, TX\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/route/",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "route", ""]
+        },
+        "description": "Under one tank (500 mi), so fuel_stops is empty."
+      }
+    },
+    {
+      "name": "Plan route (validation error - missing destination)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": \"Chicago, IL\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/route/",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "route", ""]
+        },
+        "description": "Returns 400 with an example payload."
+      }
+    },
+    {
+      "name": "API schema (GET)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/route/",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "route", ""]
+        },
+        "description": "Self-documenting JSON schema for the endpoint."
+      }
+    }
+  ]
+}
